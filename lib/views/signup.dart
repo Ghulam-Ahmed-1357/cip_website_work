@@ -1,56 +1,64 @@
 import 'dart:convert';
 
-import 'package:cip_website/dashboard.dart';
-import 'package:cip_website/signup.dart';
+import 'package:cip_website/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SiginupScreen extends StatefulWidget {
+  const SiginupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SiginupScreen> createState() => _SiginupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SiginupScreenState extends State<SiginupScreen> {
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isObscure = true;
-  String? email;
-  String? password;
 
-  Future<bool> isValidUser(String email, String password) async {
+  Future<void> saveUser(String email, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userData = prefs.getString('users');
+    Map<String, String> usersMap = {};
+    if (userData != null) {
+      usersMap = Map<String, String>.from(json.decode(userData));
+    }
 
-    if (userData == null) {
+    if (usersMap.containsKey(email)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Don`t have any account signup first.'),
+          content: Text('This email is already registered.'),
           backgroundColor: Colors.red,
         ),
       );
-      return false;
-    } else {
-      Map<String, String> usersMap = Map<String, String>.from(
-        json.decode(userData),
-      );
-      return usersMap[email] == password;
+      return;
     }
 
-    // email = prefs.getString('email');
-    // password = prefs.getString('password');
+    usersMap[email] = password;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("User created Successfully"),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    await prefs.setString('users', json.encode(usersMap));
+    // prefs.setString('email', emailController.text);
+    // prefs.setString('password', passwordController.text);
   }
 
   bool isEmailValid(String email) {
-    final emailRegex = RegExp(
-      r"^[a-zA-Z0-9]+([._%+-]?[a-zA-Z0-9])*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-    );
+final emailRegex = RegExp(
+  r"^[a-zA-Z0-9]+([._%+-]?[a-zA-Z0-9])*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+);
     return emailRegex.hasMatch(email);
   }
 
   void isValidate() async {
-    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+    if (emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        nameController.text.isNotEmpty) {
       if (isEmailValid(emailController.text)) {
         if (passwordController.text.length < 6) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -60,16 +68,12 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
         } else {
-          bool isValid = await isValidUser(
-            emailController.text,
-            passwordController.text,
+          await saveUser(emailController.text, passwordController.text);
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
           );
-          if (isValid) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Dashboard()),
-            );
-          }
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -82,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please fill all the fields'),
+          content: Text('Please fill all the fields.'),
           backgroundColor: Colors.red,
         ),
       );
@@ -112,10 +116,35 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Login',
+                  'Signup',
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 40),
+                Container(
+                  width: size.width * 0.25,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade400,
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: nameController,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                      hintText: 'Enter your name',
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 25),
                 Container(
                   width: size.width * 0.25,
                   decoration: BoxDecoration(
@@ -192,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12.0),
                         child: Text(
-                          'Login',
+                          'Signup',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -208,18 +237,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Don`t have an account? '),
+                    Text('Already have an account? '),
                     InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SiginupScreen(),
+                            builder: (context) => LoginScreen(),
                           ),
                         );
                       },
                       child: Text(
-                        'Signup',
+                        'Login',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),

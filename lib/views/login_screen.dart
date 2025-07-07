@@ -1,64 +1,56 @@
 import 'dart:convert';
 
-import 'package:cip_website/login_screen.dart';
+import 'package:cip_website/views/dashboard.dart';
+import 'package:cip_website/views/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SiginupScreen extends StatefulWidget {
-  const SiginupScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SiginupScreen> createState() => _SiginupScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SiginupScreenState extends State<SiginupScreen> {
-  TextEditingController nameController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isObscure = true;
+  String? email;
+  String? password;
 
-  Future<void> saveUser(String email, String password) async {
+  Future<bool> isValidUser(String email, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userData = prefs.getString('users');
-    Map<String, String> usersMap = {};
-    if (userData != null) {
-      usersMap = Map<String, String>.from(json.decode(userData));
-    }
 
-    if (usersMap.containsKey(email)) {
+    if (userData == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('This email is already registered.'),
+          content: Text('Don`t have any account signup first.'),
           backgroundColor: Colors.red,
         ),
       );
-      return;
+      return false;
+    } else {
+      Map<String, String> usersMap = Map<String, String>.from(
+        json.decode(userData),
+      );
+      return usersMap[email] == password;
     }
 
-    usersMap[email] = password;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("User created Successfully"),
-        backgroundColor: Colors.green,
-      ),
-    );
-
-    await prefs.setString('users', json.encode(usersMap));
-    // prefs.setString('email', emailController.text);
-    // prefs.setString('password', passwordController.text);
+    // email = prefs.getString('email');
+    // password = prefs.getString('password');
   }
 
   bool isEmailValid(String email) {
-final emailRegex = RegExp(
-  r"^[a-zA-Z0-9]+([._%+-]?[a-zA-Z0-9])*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-);
+    final emailRegex = RegExp(
+      r"^[a-zA-Z0-9]+([._%+-]?[a-zA-Z0-9])*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+    );
     return emailRegex.hasMatch(email);
   }
 
   void isValidate() async {
-    if (emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty &&
-        nameController.text.isNotEmpty) {
+    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       if (isEmailValid(emailController.text)) {
         if (passwordController.text.length < 6) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -68,12 +60,16 @@ final emailRegex = RegExp(
             ),
           );
         } else {
-          await saveUser(emailController.text, passwordController.text);
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
+          bool isValid = await isValidUser(
+            emailController.text,
+            passwordController.text,
           );
+          if (isValid) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Dashboard()),
+            );
+          }
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -86,7 +82,7 @@ final emailRegex = RegExp(
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please fill all the fields.'),
+          content: Text('Please fill all the fields'),
           backgroundColor: Colors.red,
         ),
       );
@@ -116,35 +112,10 @@ final emailRegex = RegExp(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Signup',
+                  'Login',
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 40),
-                Container(
-                  width: size.width * 0.25,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade400,
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: TextField(
-                    controller: nameController,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                      hintText: 'Enter your name',
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 25),
                 Container(
                   width: size.width * 0.25,
                   decoration: BoxDecoration(
@@ -221,7 +192,7 @@ final emailRegex = RegExp(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12.0),
                         child: Text(
-                          'Signup',
+                          'Login',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -237,18 +208,18 @@ final emailRegex = RegExp(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Already have an account? '),
+                    Text('Don`t have an account? '),
                     InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
+                            builder: (context) => SiginupScreen(),
                           ),
                         );
                       },
                       child: Text(
-                        'Login',
+                        'Signup',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),

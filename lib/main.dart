@@ -1,5 +1,6 @@
 // import 'package:cip_website/dashboard.dart';
-import 'package:cip_website/dashboard.dart';
+import 'package:cip_website/views/add_planning_dashboard.dart';
+// import 'package:cip_website/views/dashboard.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Dashboard(), debugShowCheckedModeBanner: false);
+    return MaterialApp(
+      home: AddPlanningDashboard(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
