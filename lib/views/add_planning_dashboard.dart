@@ -1,6 +1,11 @@
 import 'package:cip_website/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
+extension SpaceExtension on num {
+  SizedBox get height => SizedBox(height: toDouble());
+  SizedBox get width => SizedBox(width: toDouble());
+}
+
 class AddPlanningDashboard extends StatefulWidget {
   const AddPlanningDashboard({super.key});
 
@@ -11,6 +16,7 @@ class AddPlanningDashboard extends StatefulWidget {
 class _AddPlanningDashboardState extends State<AddPlanningDashboard> {
   bool isDrawer = true;
   String? selectedItem;
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.sizeOf(context);
@@ -345,284 +351,176 @@ class _AddPlanningDashboardState extends State<AddPlanningDashboard> {
                             horizontal: 36,
                           ),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Image.asset('assets/images/left.png'),
+                                          SizedBox(width: 15),
+                                          Text(
+                                            'CONTRACT DETAILS',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      CustomButton(
+                                        onTap: () {},
+                                        text: 'Add Planning',
+                                        width: size.width * 0.14,
+                                      ),
+                                    ],
+                                  ),
+                                  25.height,
+                                  Divider(),
+                                  25.height,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomTextField(
+                                        hintText: 'Enter Name',
+                                        label: 'Name',
+                                        width: size.width * 0.16,
+                                      ),
+                                      CustomTextField(
+                                        hintText: 'Email',
+                                        label: 'Enter email',
+                                        width: size.width * 0.16,
+                                      ),
+                                      CustomTextField(
+                                        hintText: 'Enter Phone number',
+                                        label: 'Phone',
+                                        width: size.width * 0.16,
+                                        keyboardType: TextInputType.phone,
+                                      ),
+                                      CustomTextField(
+                                        hintText: 'Enter designation',
+                                        label: 'Designation',
+                                        width: size.width * 0.16,
+                                      ),
+                                    ],
+                                  ),
+                                  25.height,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomTextField(
+                                        hintText: 'Enter Name',
+                                        label: 'Name',
+                                        width: size.width * 0.16,
+                                      ),
+                                      CustomTextField(
+                                        hintText: 'Email',
+                                        label: 'Enter email',
+                                        width: size.width * 0.16,
+                                      ),
+                                      CustomTextField(
+                                        hintText: 'Enter Phone number',
+                                        label: 'Phone',
+                                        width: size.width * 0.16,
+                                      ),
+                                      CustomTextField(
+                                        hintText: 'Enter designation',
+                                        label: 'Designation',
+                                        width: size.width * 0.16,
+                                      ),
+                                    ],
+                                  ),
+                                  30.height,
+                                ],
+                              ),
+                              Divider(),
+                              Text('Contract'),
+                              Text(
+                                'Fossphorus',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 25),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomButton(
+                                    onTap: () {},
+                                    text: 'Client Docs',
+                                    width: size.width * 0.18,
+                                  ),
+                                  SizedBox(width: 16),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: Container(
+                                      width: size.width * 0.18,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: AppColors.secondaryColor,
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 9.0,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'Firm Docs',
+                                            style: TextStyle(
+                                              color: AppColors.secondaryColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              25.height,
+                              Column(
                                 children: [
                                   Row(
                                     children: [
-                                      Image.asset('assets/images/left.png'),
-                                      SizedBox(width: 15),
-                                      Text(
-                                        'CONTRACT DETAILS',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                        ),
+                                      CustomTextField(
+                                        hintText: 'Start date',
+                                        label: 'Start Date',
+                                        width: size.width * 0.12,
+                                        fillColor: Colors.white,
+                                        keyboardType: TextInputType.datetime,
+                                      ),
+                                      8.width,
+                                      CustomTextField(
+                                        hintText: 'End date',
+                                        label: 'End Date',
+                                        width: size.width * 0.12,
+                                        fillColor: Colors.white,
+                                        keyboardType: TextInputType.datetime,
+                                      ),
+                                      8.width,
+                                      CustomTextField(
+                                        hintText: 'Search...',
+                                        label: 'File name',
+                                        width: size.width * 0.12,
+                                        fillColor: Colors.white,
+                                        keyboardType: TextInputType.datetime,
                                       ),
                                     ],
                                   ),
+                                  20.height,
                                   Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: AppColors.secondaryColor,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 9.0,
-                                        horizontal: 32,
-                                      ),
-                                      child: Text(
-                                        'Add Planning',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                              Divider(),
-                              const SizedBox(height: 15),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-
-                                    children: [
-                                      Text('Name'),
-                                      Container(
-                                        height: 50,
-                                        width: size.width * 0.16,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          color: Color(0xFFE6E6E6),
-                                        ),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                  horizontal: 16.0,
-                                                ),
-                                            border: InputBorder.none,
-                                            hintText: 'Enter name',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-
-                                    children: [
-                                      Text('Email'),
-                                      Container(
-                                        height: 50,
-                                        width: size.width * 0.16,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          color: Color(0xFFE6E6E6),
-                                        ),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                  horizontal: 16.0,
-                                                ),
-                                            border: InputBorder.none,
-                                            hintText: 'Enter email',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-
-                                    children: [
-                                      Text('Phone'),
-                                      Container(
-                                        height: 50,
-                                        width: size.width * 0.16,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          color: Color(0xFFE6E6E6),
-                                        ),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                  horizontal: 16.0,
-                                                ),
-                                            border: InputBorder.none,
-                                            hintText: 'Enter phone',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-
-                                    children: [
-                                      Text('Designation'),
-                                      Container(
-                                        height: 50,
-                                        width: size.width * 0.16,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          color: Color(0xFFE6E6E6),
-                                        ),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                  horizontal: 16.0,
-                                                ),
-                                            border: InputBorder.none,
-                                            hintText: 'Enter Designation',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 25),
-
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-
-                                    children: [
-                                      Text('Name'),
-                                      Container(
-                                        height: 50,
-                                        width: size.width * 0.16,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          color: Color(0xFFE6E6E6),
-                                        ),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                  horizontal: 16.0,
-                                                ),
-                                            border: InputBorder.none,
-                                            hintText: 'Enter name',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-
-                                    children: [
-                                      Text('Email'),
-                                      Container(
-                                        height: 50,
-                                        width: size.width * 0.16,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          color: Color(0xFFE6E6E6),
-                                        ),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                  horizontal: 16.0,
-                                                ),
-                                            border: InputBorder.none,
-                                            hintText: 'Enter email',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-
-                                    children: [
-                                      Text('Phone'),
-                                      Container(
-                                        height: 50,
-                                        width: size.width * 0.16,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          color: Color(0xFFE6E6E6),
-                                        ),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                  horizontal: 16.0,
-                                                ),
-                                            border: InputBorder.none,
-                                            hintText: 'Enter phone',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-
-                                    children: [
-                                      Text('Designation'),
-                                      Container(
-                                        height: 50,
-                                        width: size.width * 0.16,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          color: Color(0xFFE6E6E6),
-                                        ),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                  horizontal: 16.0,
-                                                ),
-                                            border: InputBorder.none,
-                                            hintText: 'Enter Designation',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                    decoration: BoxDecoration(),
+                                    child: Row(children: [],),
                                   ),
                                 ],
                               ),
@@ -637,6 +535,95 @@ class _AddPlanningDashboardState extends State<AddPlanningDashboard> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CustomTextField extends StatelessWidget {
+  const CustomTextField({
+    super.key,
+    required this.hintText,
+    required this.label,
+    required this.width,
+    this.height,
+    this.fillColor,
+    this.keyboardType,
+  });
+
+  final String hintText;
+  final String label;
+  final double width;
+  final double? height;
+  final Color? fillColor;
+  final TextInputType? keyboardType;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label),
+        Container(
+          height: height ?? 50,
+          width: width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: fillColor ?? Color(0xFFE6E6E6),
+            border: Border.all(color: Colors.grey.shade400),
+          ),
+          child: TextField(
+            textInputAction: TextInputAction.next,
+            keyboardType: keyboardType ?? TextInputType.text,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+              border: InputBorder.none,
+              hintText: hintText,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final VoidCallback onTap;
+  final String text;
+  final double? fontSize;
+  final double width;
+
+  const CustomButton({
+    super.key,
+    required this.onTap,
+    required this.text,
+    this.fontSize,
+    required this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: AppColors.secondaryColor,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 9.0),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: fontSize ?? 16,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
