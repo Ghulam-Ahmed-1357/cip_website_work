@@ -1041,6 +1041,7 @@ class _DashboardState extends State<Dashboard> {
                                               //     TableCellVerticalAlignment.middle,
                                               children: <TableRow>[
                                                 TableRow(
+                                                 
                                                   children: <Widget>[
                                                     Padding(
                                                       padding:
