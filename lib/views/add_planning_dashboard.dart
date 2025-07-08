@@ -520,7 +520,9 @@ class _AddPlanningDashboardState extends State<AddPlanningDashboard> {
                                   20.height,
                                   Container(
                                     decoration: BoxDecoration(),
-                                    child: Row(children: [],),
+                                    child: Row(children: [
+                                      
+                                    ],),
                                   ),
                                 ],
                               ),
