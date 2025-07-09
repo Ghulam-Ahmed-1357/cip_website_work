@@ -4,7 +4,6 @@ import 'package:cip_website/dashboard.dart';
 import 'package:cip_website/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cip_website/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
