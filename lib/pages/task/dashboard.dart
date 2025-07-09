@@ -60,9 +60,9 @@ class _DashboardState extends State<Dashboard> {
     final Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               drawer
                   ? Container(
@@ -127,24 +127,6 @@ class _DashboardState extends State<Dashboard> {
                               padding: const EdgeInsets.only(left: 8.0, top: 8),
                               child: ListView(
                                 children: [
-                                  // InkWell(
-                                  //   onTap: () {
-                                  //     setState(() => selectedItem = 'Tasks');
-                                  //   },
-                                  //   child: Container(
-                                  //     height: 30,
-                                  //     color: selectedItem == "Tasks"
-                                  //         ? Colors.amber
-                                  //         : null,
-                                  //     child: Row(
-                                  //       children: [
-                                  //         Icon(Icons.task_outlined),
-                                  //         Expanded(child: Text('Task')),
-                                  //         Icon(Icons.arrow_forward_ios),
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                  // ),
                                   CustomListTile(
                                     onTap: () {
                                       setState(() => selectedItem = 'Tasks');
@@ -1054,6 +1036,7 @@ class _DashboardState extends State<Dashboard> {
                                               //     TableCellVerticalAlignment.middle,
                                               children: <TableRow>[
                                                 TableRow(
+                                                 
                                                   children: <Widget>[
                                                     Padding(
                                                       padding:
