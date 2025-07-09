@@ -70,18 +70,9 @@ class _PlanningScreenState extends State<PlanningScreen> {
 
   List<TableModel> frontEndList = [
     TableModel(
-      client: 'ServiceNinjaNow',
-      taskName: 'AB Pitch Deck Improvement',
-      assignTo: 'Tauseef',
-      time: 1,
-      usedHours: '02:00:00',
-      dueDate: '10-05-2025',
-      status: 'pending',
-    ),
-    TableModel(
       client: 'Accounting Bookkeepers',
-      taskName: 'AB Pitch Deck Improvement',
-      assignTo: 'Abdullah',
+      taskName: 'ACCBK Bermuda Pages',
+      assignTo: 'Azmeer',
       time: 1,
       usedHours: '02:00:00',
       dueDate: '10-05-2025',
@@ -90,16 +81,25 @@ class _PlanningScreenState extends State<PlanningScreen> {
     TableModel(
       client: 'Islandcare',
       taskName: 'AB Pitch Deck Improvement',
-      assignTo: 'Ahmer',
+      assignTo: 'Farooq',
       time: 1,
-      usedHours: '-',
+      usedHours: '02:00:00',
       dueDate: '10-05-2025',
       status: 'pending',
     ),
     TableModel(
       client: 'ServiceNinjaNow',
       taskName: 'AB Pitch Deck Improvement',
-      assignTo: 'Ahmer',
+      assignTo: 'Burhan',
+      time: 1,
+      usedHours: '-',
+      dueDate: '10-05-2025',
+      status: 'pending',
+    ),
+    TableModel(
+      client: 'Accounting Bookkeepers',
+      taskName: 'AB Pitch Deck Improvement',
+      assignTo: 'Azmeer',
       time: 1,
       usedHours: '-',
       dueDate: '10-05-2025',
@@ -430,6 +430,26 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                           ),
                                       ],
                                     ),
+
+                                    ...frontEndList
+                                        .asMap()
+                                        .entries
+                                        .map(
+                                          (entry) => [
+                                            _buildRow(
+                                              uIUXList.length + entry.key + 1,
+                                              entry.value.client,
+                                              entry.value.taskName,
+                                              entry.value.assignTo,
+                                              entry.value.time,
+                                              entry.value.usedHours,
+                                              entry.value.dueDate,
+                                              entry.value.status,
+                                            ),
+                                            _buildDivider(),
+                                          ],
+                                        )
+                                        .expand((widgetPair) => widgetPair),
                                   ],
                                 ),
                               ],

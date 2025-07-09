@@ -1,6 +1,5 @@
 // import 'package:cip_website/dashboard.dart';
 // import 'package:cip_website/views/add_planning_dashboard.dart';
-import 'package:cip_website/pages/contract/contract_screen.dart';
 import 'package:cip_website/pages/planning/planning_screen.dart';
 // import 'package:cip_website/views/dashboard.dart';
 
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ContractScreen(),
+      home: PlanningScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
