@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String? userData = prefs.getString('users');
 
     if (userData == null) {
+      if (!mounted) return false;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Don`t have any account signup first.'),
@@ -65,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
             passwordController.text,
           );
           if (isValid) {
+            if (!mounted) return;
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Dashboard()),
@@ -214,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SiginupScreen(),
+                            builder: (context) => SignupScreen(),
                           ),
                         );
                       },
