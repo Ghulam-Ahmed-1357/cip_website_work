@@ -1,6 +1,6 @@
 import 'dart:io'; //InternetAddress utility
 import 'dart:async';
-import 'package:cip_website/view_model/helper_function.dart';
+import 'package:cip_website/config/http_handler/helper_function.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ConnectionStatusSingleton {

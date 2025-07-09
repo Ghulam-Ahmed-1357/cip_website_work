@@ -1,8 +1,8 @@
 import 'package:cip_website/config/app_urls.dart';
-import 'package:cip_website/utils/http_handlers.dart';
-import 'package:cip_website/utils/storage_service.dart';
-import 'package:cip_website/view_model/helper_function.dart';
-import 'package:cip_website/view_model/profile_model.dart';
+import 'package:cip_website/config/http_handler/http_handlers.dart';
+import 'package:cip_website/config/storage_service.dart';
+import 'package:cip_website/config/http_handler/helper_function.dart';
+import 'package:cip_website/model/profile_model.dart';
 import 'package:flutter/material.dart';
 
 class SessionProvider extends ChangeNotifier {

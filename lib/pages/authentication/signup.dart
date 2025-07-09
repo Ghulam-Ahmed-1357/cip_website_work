@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cip_website/views/login_screen.dart';
+import 'package:cip_website/pages/authentication/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

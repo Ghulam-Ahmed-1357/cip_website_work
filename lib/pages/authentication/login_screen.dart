@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:cip_website/views/add_planning_dashboard.dart';
-import 'package:cip_website/views/signup.dart';
+
+import 'package:cip_website/pages/task/dashboard.dart';
+import 'package:cip_website/pages/authentication/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -66,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (isValid) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AddPlanningDashboard()),
+              MaterialPageRoute(builder: (context) => Dashboard()),
             );
           }
         }

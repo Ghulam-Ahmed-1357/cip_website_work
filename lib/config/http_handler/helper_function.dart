@@ -1,5 +1,5 @@
-import 'package:cip_website/utils/app_colors.dart';
-import 'package:cip_website/utils/storage_service.dart';
+import 'package:cip_website/config/app_colors.dart';
+import 'package:cip_website/config/storage_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 

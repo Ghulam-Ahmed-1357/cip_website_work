@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:cip_website/utils/internet_services.dart';
-import 'package:cip_website/view_model/helper_function.dart';
+import 'package:cip_website/config/http_handler/internet_services.dart';
+import 'package:cip_website/config/http_handler/helper_function.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:crypto/crypto.dart';

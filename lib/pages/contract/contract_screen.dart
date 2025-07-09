@@ -1,5 +1,5 @@
-import 'package:cip_website/utils/app_colors.dart';
-import 'package:cip_website/views/planning_screen.dart';
+import 'package:cip_website/config/app_colors.dart';
+import 'package:cip_website/pages/planning/planning_screen.dart';
 import 'package:flutter/material.dart';
 
 extension SpaceExtension on num {
@@ -7,14 +7,14 @@ extension SpaceExtension on num {
   SizedBox get width => SizedBox(width: toDouble());
 }
 
-class AddPlanningDashboard extends StatefulWidget {
-  const AddPlanningDashboard({super.key});
+class ContractScreen extends StatefulWidget {
+  const ContractScreen({super.key});
 
   @override
-  State<AddPlanningDashboard> createState() => _AddPlanningDashboardState();
+  State<ContractScreen> createState() => _ContractScreenState();
 }
 
-class _AddPlanningDashboardState extends State<AddPlanningDashboard> {
+class _ContractScreenState extends State<ContractScreen> {
   List contractList = [
     {"title": "Website content", "date": "12-12-2024"},
     {"title": "Logo design requirements", "date": "12-12-2024"},
