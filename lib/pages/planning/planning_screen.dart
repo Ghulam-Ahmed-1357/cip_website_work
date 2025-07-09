@@ -1,5 +1,6 @@
 import 'package:cip_website/config/app_colors.dart';
 import 'package:cip_website/pages/contract/contract_screen.dart';
+import 'package:cip_website/pages/planning/add_planning.dart';
 import 'package:flutter/material.dart';
 
 class PlanningScreen extends StatefulWidget {
@@ -121,6 +122,15 @@ class _PlanningScreenState extends State<PlanningScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.sizeOf(context);
+    if (size.width < 1100) {
+      setState(() {
+        isDrawer = false;
+      });
+    } else if (size.width > 1100) {
+      setState(() {
+        isDrawer = true;
+      });
+    }
     return Scaffold(
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,7 +141,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
                   isDrawer: isDrawer,
                   selectedItem: selectedItem,
                 )
-              : Padding(
+              : size.width > 1200
+              ? Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () {
@@ -141,7 +152,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
                     },
                     child: Icon(Icons.menu),
                   ),
-                ),
+                )
+              : SizedBox(height: 1),
 
           Expanded(
             child: SizedBox(
@@ -204,6 +216,7 @@ class _PlanningScreenState extends State<PlanningScreen> {
                             horizontal: 36,
                           ),
                           child: SingleChildScrollView(
+                            // scrollDirection: Axis.vertical,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -229,8 +242,31 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                           ],
                                         ),
                                         CustomButton(
-                                          onTap: () {},
-                                          text: 'Add Planning',
+                                          onTap: () {
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //     builder: (context) =>
+                                            //         AddPlanning(),
+                                            //   ),
+                                            // );
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return Dialog(
+                                                  backgroundColor: Colors.white,
+                                                  child: SizedBox(
+                                                    height: size.height * 0.4,
+                                                    width: size.width * 0.4,
+                                                    child: Column(children: [
+                                                      Text('Add Planning Task')
+                                                    ]),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          text: 'Add Planning Task',
                                           width: size.width * 0.14,
                                         ),
                                       ],
@@ -244,6 +280,7 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                   ],
                                 ),
                                 Table(
+                                  border: null,
                                   columnWidths: <int, TableColumnWidth>{
                                     0: FlexColumnWidth(),
                                     1: FlexColumnWidth(),
@@ -254,7 +291,6 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                     6: FlexColumnWidth(),
                                     7: FlexColumnWidth(),
                                     8: FlexColumnWidth(),
-                                    9: FlexColumnWidth(),
                                   },
                                   children: [
                                     TableRow(
@@ -336,15 +372,6 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                             vertical: 8.0,
                                           ),
                                           child: Text(
-                                            'Comments',
-                                            style: tileTextStyle(14),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 8.0,
-                                          ),
-                                          child: Text(
                                             'Status',
                                             style: tileTextStyle(14),
                                           ),
@@ -373,6 +400,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                             padding: const EdgeInsets.all(12),
                                             child: const Text(
                                               'UI/UX DESIGN',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
@@ -380,7 +409,7 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                             ),
                                           ),
                                         ),
-                                        for (int i = 0; i < 10; i++)
+                                        for (int i = 0; i < 9; i++)
                                           TableCell(
                                             child: Container(
                                               height: size.width * 0.035,
@@ -390,23 +419,33 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                       ],
                                     ),
 
-                                    for (var entry in uIUXList.asMap().entries)
-                                      _buildRow(
-                                        entry.key + 1,
-                                        entry.value.client,
-                                        entry.value.taskName,
-                                        entry.value.assignTo,
-                                        entry.value.time,
-                                        entry.value.usedHours,
-                                        entry.value.dueDate,
-                                        entry.value.status,
-                                      ),
-
+                                    ...uIUXList
+                                        .asMap()
+                                        .entries
+                                        .map(
+                                          (entry) => [
+                                            _buildRow(
+                                              entry.key + 1,
+                                              entry.value.client,
+                                              entry.value.taskName,
+                                              entry.value.assignTo,
+                                              entry.value.time,
+                                              entry.value.usedHours,
+                                              entry.value.dueDate,
+                                              entry.value.status,
+                                            ),
+                                            _buildDivider(),
+                                          ],
+                                        )
+                                        .expand((widgetPair) => widgetPair),
                                     TableRow(
                                       // decoration: BoxDecoration(border: null),
                                       children: [
                                         TableCell(
                                           // This single cell spans all visual columns
+                                          // verticalAlignment:
+                                          //     TableCellVerticalAlignment
+                                          //         .middle,
                                           child: Container(
                                             height: size.width * 0.035,
                                             width: double.infinity,
@@ -414,6 +453,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                             padding: const EdgeInsets.all(12),
                                             child: const Text(
                                               'Frontend Development',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
@@ -421,7 +462,7 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                             ),
                                           ),
                                         ),
-                                        for (int i = 0; i < 10; i++)
+                                        for (int i = 0; i < 9; i++)
                                           TableCell(
                                             child: Container(
                                               height: size.width * 0.035,
@@ -481,7 +522,6 @@ class _PlanningScreenState extends State<PlanningScreen> {
         Container(height: 1, color: Color(0xFFDCDCDC)),
         Container(height: 1, color: Color(0xFFDCDCDC)),
         Container(height: 1, color: Color(0xFFDCDCDC)),
-        Container(height: 1, color: Color(0xFFDCDCDC)),
       ],
     );
   }
@@ -498,13 +538,38 @@ class _PlanningScreenState extends State<PlanningScreen> {
   ) {
     return TableRow(
       children: [
-        Padding(padding: const EdgeInsets.all(12.0), child: Text('#$taskNo')),
-        Padding(padding: const EdgeInsets.all(12.0), child: Text(client)),
-        Padding(padding: const EdgeInsets.all(12.0), child: Text(taskName)),
-        Padding(padding: const EdgeInsets.all(12.0), child: Text(assignTo)),
-        Padding(padding: const EdgeInsets.all(12.0), child: Text('${time}hr')),
-        Padding(padding: const EdgeInsets.all(12.0), child: Text(usedHours)),
-        Padding(padding: const EdgeInsets.all(12.0), child: Text(dueDate)),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text('#$taskNo', maxLines: 2, overflow: TextOverflow.ellipsis),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(client, maxLines: 2, overflow: TextOverflow.ellipsis),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(taskName, maxLines: 2, overflow: TextOverflow.ellipsis),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(assignTo, maxLines: 2, overflow: TextOverflow.ellipsis),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            '${time}hr',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(usedHours, maxLines: 2, overflow: TextOverflow.ellipsis),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(dueDate, maxLines: 2, overflow: TextOverflow.ellipsis),
+        ),
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: Container(
@@ -514,13 +579,15 @@ class _PlanningScreenState extends State<PlanningScreen> {
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Center(child: Text('Task no.')),
+              child: Center(
+                child: Text(
+                  'Task no.',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Icon(Icons.message),
         ),
         Padding(
           padding: const EdgeInsets.all(12.0),

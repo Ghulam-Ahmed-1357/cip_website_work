@@ -28,6 +28,16 @@ class _ContractScreenState extends State<ContractScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.sizeOf(context);
+    if (size.width < 1100) {
+      setState(() {
+        isDrawer = false;
+      });
+    }
+    else if (size.width > 1100) {
+      setState(() {
+        isDrawer = true;
+      });
+    }
     return Scaffold(
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,17 +48,19 @@ class _ContractScreenState extends State<ContractScreen> {
                   isDrawer: isDrawer,
                   selectedItem: selectedItem,
                 )
-              : Padding(
+              : size.width > 1200
+              ? Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
-                    child: Icon(Icons.menu),
                     onTap: () {
                       setState(() {
                         isDrawer = !isDrawer;
                       });
                     },
+                    child: Icon(Icons.menu),
                   ),
-                ),
+                )
+              : SizedBox(height: 1),
           Expanded(
             child: SizedBox(
               child: Column(
@@ -366,10 +378,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       children: const [
                         Text(
                           'Abdul Mannan',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(color: Colors.white),
                         ),
                         Text(
                           'amannan@fossphorus.com',
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(color: Colors.white),
                         ),
@@ -767,6 +782,8 @@ class CustomListTile extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
