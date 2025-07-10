@@ -5,7 +5,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ConnectionStatusSingleton {
   //This creates the single instance by calling the `_internal` constructor specified below
-  static final ConnectionStatusSingleton _singleton = ConnectionStatusSingleton._internal();
+  static final ConnectionStatusSingleton _singleton =
+      ConnectionStatusSingleton._internal();
   ConnectionStatusSingleton._internal();
 
   //This is what's used to retrieve the instance through the app
@@ -23,15 +24,14 @@ class ConnectionStatusSingleton {
   //Hook into flutter_connectivity's Stream to listen for changes
   //And check the connection status out of the gate
   void initialize() {
-    _connectivity.onConnectivityChanged.listen(
-      (event) {
-        if (event[0] == ConnectivityResult.wifi || event[0] == ConnectivityResult.mobile) {
-          _connectionChange(event[0]);
-        } else {
-          showNetworkErrorToast("No internet connected");
-        }
-      },
-    );
+    _connectivity.onConnectivityChanged.listen((event) {
+      if (event[0] == ConnectivityResult.wifi ||
+          event[0] == ConnectivityResult.mobile) {
+        _connectionChange(event[0]);
+      } else {
+        showNetworkErrorToast("No internet connected");
+      }
+    });
     checkConnection();
   }
 
