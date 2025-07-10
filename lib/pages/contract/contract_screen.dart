@@ -32,8 +32,7 @@ class _ContractScreenState extends State<ContractScreen> {
       setState(() {
         isDrawer = false;
       });
-    }
-    else if (size.width > 1100) {
+    } else if (size.width > 1100) {
       setState(() {
         isDrawer = true;
       });
@@ -735,6 +734,8 @@ class CustomButton extends StatelessWidget {
           child: Center(
             child: Text(
               text,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
