@@ -2,7 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AppUrls {
   // static String baseUrl = dotenv.env["Test_URL"]!;
-  static String baseUrl = dotenv.env["http://192.168.10.62:8000/"]!;
+  static String baseUrl = dotenv.env["http://192.168.10.62:8000"]!;
   static String apiBaseUrl = "$baseUrl/api/v1";
   static String storageUrl = "$baseUrl/storage";
   //  "https://ts.koreintl.com/api";

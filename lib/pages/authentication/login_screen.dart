@@ -1,5 +1,5 @@
-import 'dart:convert';
-
+import 'package:cip_website/config/app_urls.dart';
+import 'package:cip_website/config/http_handler/http_handlers.dart';
 import 'package:cip_website/pages/contract/contract_screen.dart';
 import 'package:cip_website/pages/authentication/signup.dart';
 import 'package:flutter/material.dart';
@@ -20,28 +20,64 @@ class _LoginScreenState extends State<LoginScreen> {
   String? password;
 
   Future<bool> isValidUser(String email, String password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userData = prefs.getString('users');
+    try {
+      final response = await postRequesthandler(
+        url: AppUrls.login,
+        data: {"email": email, "password": password},
+      );
 
-    if (userData == null) {
-      if (!mounted) return false;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Don`t have any account signup first.'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return false;
-    } else {
-      Map<String, String> usersMap = Map<String, String>.from(
-        json.decode(userData),
-      );
-      return usersMap[email] == password;
+      if (response != null) {
+        if (response.statusCode == 200) {
+          final responseData = response.data;
+          print(response.statusCode);
+          final token = responseData['data']?['token'];
+
+          if (token != null) {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString('token', token);
+
+            debugPrint('Login successful. Token saved.');
+            return true;
+          } else {
+            debugPrint('Token not found in response.');
+          }
+        } else {
+          debugPrint('Login failed. Status: ${response.statusCode}');
+        }
+      } else {
+        debugPrint('No response from server (null).');
+      }
+    } catch (e, stackTrace) {
+      debugPrint('Login error: $e');
+      debugPrint('StackTrace: $stackTrace');
     }
 
-    // email = prefs.getString('email');
-    // password = prefs.getString('password');
+    return false;
   }
+
+  // Future<bool> isValidUser(String email, String password) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? userData = prefs.getString('users');
+
+  //   if (userData == null) {
+  //     if (!mounted) return false;
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Don`t have any account signup first.'),
+  //         backgroundColor: Colors.red,
+  //       ),
+  //     );
+  //     return false;
+  //   } else {
+  //     Map<String, String> usersMap = Map<String, String>.from(
+  //       json.decode(userData),
+  //     );
+  //     return usersMap[email] == password;
+  //   }
+
+  //   // email = prefs.getString('email');
+  //   // password = prefs.getString('password');
+  // }
 
   bool isEmailValid(String email) {
     final emailRegex = RegExp(
