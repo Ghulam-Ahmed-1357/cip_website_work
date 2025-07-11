@@ -495,12 +495,7 @@ class _DashboardState extends State<Dashboard> {
                                                                 setState(() {
                                                                   isBreak =
                                                                       true;
-                                                                  print(
-                                                                    "pressed value $isBreak",
-                                                                  );
-                                                                  print(
-                                                                    isBreak,
-                                                                  );
+                                                                  // Use a logging framework here if needed.
                                                                   Navigator.pop(
                                                                     context,
                                                                   );

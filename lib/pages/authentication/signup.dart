@@ -4,14 +4,14 @@ import 'package:cip_website/pages/authentication/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SiginupScreen extends StatefulWidget {
-  const SiginupScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<SiginupScreen> createState() => _SiginupScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SiginupScreenState extends State<SiginupScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();

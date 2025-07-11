@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   String? userData = prefs.getString('users');
 
+<<<<<<< HEAD
   //   if (userData == null) {
   //     ScaffoldMessenger.of(context).showSnackBar(
   //       SnackBar(
@@ -37,6 +38,23 @@ class _LoginScreenState extends State<LoginScreen> {
   //     );
   //     return usersMap[email] == password;
   //   }
+=======
+    if (userData == null) {
+      if (!mounted) return false;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Don`t have any account signup first.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return false;
+    } else {
+      Map<String, String> usersMap = Map<String, String>.from(
+        json.decode(userData),
+      );
+      return usersMap[email] == password;
+    }
+>>>>>>> e829b5bfe0ace8925dbb4911194c5e7b9ad5cdef
 
   //   // email = prefs.getString('email');
   //   // password = prefs.getString('password');
@@ -50,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void isValidate() async {
+<<<<<<< HEAD
     final email = emailController.text;
     final password = passwordController.text;
 
@@ -73,6 +92,36 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ContractScreen()),
+=======
+    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+      if (isEmailValid(emailController.text)) {
+        if (passwordController.text.length < 6) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Password must be 6 characters long'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } else {
+          bool isValid = await isValidUser(
+            emailController.text,
+            passwordController.text,
+          );
+          if (isValid) {
+            if (!mounted) return;
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Dashboard()),
+            );
+          }
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Please enter valid email.'),
+            backgroundColor: Colors.red,
+          ),
+>>>>>>> e829b5bfe0ace8925dbb4911194c5e7b9ad5cdef
         );
       } else {
         showErrorToast('Login failed. Please check your credentials.');
@@ -207,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SiginupScreen(),
+                            builder: (context) => SignupScreen(),
                           ),
                         );
                       },
