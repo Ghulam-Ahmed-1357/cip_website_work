@@ -1,7 +1,6 @@
 import 'package:cip_website/config/http_handler/internet_services.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 String secretKey = dotenv.env["SECRET_KEY"]!;
 ConnectionStatusSingleton connectionStatusSingleton =
@@ -22,11 +21,6 @@ class RequestMethodModel {
 }
 
 List<RequestMethodModel> pendingRequest = [];
-
-Future<bool> checkConnectionWebSafe() async {
-  var result = await Connectivity().checkConnectivity();
-  return result != ConnectivityResult.none;
-}
 
 Future<Response?> postRequesthandler({
   required String url,

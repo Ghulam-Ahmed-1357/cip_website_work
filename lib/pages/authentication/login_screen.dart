@@ -15,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isObscure = true;
   String? email;
   String? password;
@@ -44,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool isEmailValid(String email) {
     final emailRegex = RegExp(
-      r"^[a-zA-Z0-9]+([._%+-]?[a-zA-Z0-9])*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+      r"^[a-zA-Z0-9]+([._%+-]?[a-zA-Z0-9])*@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$",
     );
     return emailRegex.hasMatch(email);
   }
@@ -86,140 +87,164 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.sizeOf(context);
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade400,
-                spreadRadius: 1,
-                blurRadius: 5,
+        child: Form(
+          key: formKey,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 30,
               ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Login',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 40),
-                Container(
-                  width: size.width * 0.25,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade400,
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                      ),
-                    ],
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Login',
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
-                  child: TextField(
-                    controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                      hintText: 'Enter email',
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 25),
-                Container(
-                  width: size.width * 0.25,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade400,
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: TextField(
-                    obscureText: isObscure,
-                    controller: passwordController,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                      hintText: 'Enter passsword',
-                      border: InputBorder.none,
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          setState(() {
-                            isObscure = !isObscure;
-                          });
-                        },
-                        child: Icon(
-                          isObscure ? Icons.visibility : Icons.visibility_off,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 40),
-                InkWell(
-                  onTap: isValidate,
-                  child: Container(
-                    width: size.width * 0.2,
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Don`t have an account? '),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignupScreen(),
-                          ),
-                        );
+                  SizedBox(height: 40),
+                  SizedBox(
+                    width: size.width * 0.25,
+                    child: TextFormField(
+                      controller: emailController,
+                      validator: (value) {
+                        if (emailController.text == null ||
+                            emailController.text.isEmpty) {
+                          return 'Please enter email';
+                        } else if (!(isEmailValid(emailController.text))) {
+                          return 'Please enter valid email';
+                        }
+                        return null;
                       },
-                      child: Text(
-                        'Signup',
-                        style: TextStyle(color: Colors.blue),
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                        hintText: 'Enter email',
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+
+                        // focusedBorder: OutlineInputBorder(
+                        //   borderRadius: ,
+                        //   borderSide: BorderSide(color: Colors.black),
+                        // ),
+                        // errorBorder: OutlineInputBorder(
+                        //   borderSide: BorderSide(color: Colors.black),
+                        // ),
+                        // focusedErrorBorder: OutlineInputBorder(
+                        //   borderSide: BorderSide(color: Colors.black),
+                        // ),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 30),
-              ],
+                  ),
+                  SizedBox(height: 25),
+                  SizedBox(
+                    width: size.width * 0.25,
+                    child: TextFormField(
+                      obscureText: isObscure,
+                      controller: passwordController,
+                      validator: (value) {
+                        if (passwordController.text == null ||
+                            passwordController.text.isEmpty) {
+                          return "Please enter password";
+                        } else if (passwordController.text.length < 6) {
+                          return "Password must be 6 characters long";
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        hintText: 'Enter passsword',
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            setState(() {
+                              isObscure = !isObscure;
+                            });
+                          },
+                          child: Icon(
+                            isObscure ? Icons.visibility_off : Icons.visibility,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 40),
+                  InkWell(
+                    onTap: () {
+                      bool isValid = formKey.currentState!.validate();
+                      if (isValid) {
+                        isValidate();
+                      }
+                    },
+                    child: Container(
+                      width: size.width * 0.2,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12.0),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Don`t have an account? '),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignupScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Signup',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                ],
+              ),
             ),
           ),
         ),
