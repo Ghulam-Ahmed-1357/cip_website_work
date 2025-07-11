@@ -1,9 +1,9 @@
-import 'dart:convert';
-
-import 'package:cip_website/pages/task/dashboard.dart';
+import 'package:cip_website/config/app_urls.dart';
+import 'package:cip_website/config/http_handler/helper_function.dart';
+import 'package:cip_website/config/http_handler/http_handlers.dart';
+import 'package:cip_website/pages/contract/contract_screen.dart';
 import 'package:cip_website/pages/authentication/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,28 +19,28 @@ class _LoginScreenState extends State<LoginScreen> {
   String? email;
   String? password;
 
-  Future<bool> isValidUser(String email, String password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userData = prefs.getString('users');
+  // Future<bool> isValidUser(String email, String password) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? userData = prefs.getString('users');
 
-    if (userData == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Don`t have any account signup first.'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return false;
-    } else {
-      Map<String, String> usersMap = Map<String, String>.from(
-        json.decode(userData),
-      );
-      return usersMap[email] == password;
-    }
+  //   if (userData == null) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Don`t have any account signup first.'),
+  //         backgroundColor: Colors.red,
+  //       ),
+  //     );
+  //     return false;
+  //   } else {
+  //     Map<String, String> usersMap = Map<String, String>.from(
+  //       json.decode(userData),
+  //     );
+  //     return usersMap[email] == password;
+  //   }
 
-    // email = prefs.getString('email');
-    // password = prefs.getString('password');
-  }
+  //   // email = prefs.getString('email');
+  //   // password = prefs.getString('password');
+  // }
 
   bool isEmailValid(String email) {
     final emailRegex = RegExp(
@@ -50,42 +50,35 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void isValidate() async {
-    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-      if (isEmailValid(emailController.text)) {
-        if (passwordController.text.length < 6) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Password must be 6 characters long'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        } else {
-          bool isValid = await isValidUser(
-            emailController.text,
-            passwordController.text,
-          );
-          if (isValid) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Dashboard()),
-            );
-          }
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Please enter valid email.'),
-            backgroundColor: Colors.red,
-          ),
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    if (email.isNotEmpty && password.isNotEmpty) {
+      if (!isEmailValid(email)) {
+        showErrorToast('Please enter a valid email');
+        return;
+      }
+
+      if (password.length < 6) {
+        showErrorToast('Password must be 6 characters long');
+        return;
+      }
+
+      final response = await postRequesthandler(
+        url: AppUrls.login,
+        data: {"email": email, "password": password},
+      );
+
+      if (response != null && response.statusCode == 200) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ContractScreen()),
         );
+      } else {
+        showErrorToast('Login failed. Please check your credentials.');
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please fill all the fields'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      showErrorToast('Please fill all the fields');
     }
   }
 

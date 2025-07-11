@@ -1,12 +1,11 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AppUrls {
-  // static String baseUrl = dotenv.env["Test_URL"]!;
-  static String baseUrl = dotenv.env["APP_URL"]!;
+  static String baseUrl = "http://192.168.10.62:8000";
   static String apiBaseUrl = "$baseUrl/api/v1";
   static String storageUrl = "$baseUrl/storage";
   //  "https://ts.koreintl.com/api";
-  static String login = "$apiBaseUrl/auth/login";
+  static String login = "$apiBaseUrl/api/auth/login";
   static String logout = "$apiBaseUrl/auth/logout";
   static String loginWithFingerPrint = "$apiBaseUrl/auth/login/face-and-fingerprint";
   static String setBiometricToken = "$apiBaseUrl/auth/set-biometric-token";

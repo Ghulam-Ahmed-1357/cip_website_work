@@ -2,7 +2,6 @@ import 'package:cip_website/config/app_colors.dart';
 import 'package:cip_website/config/storage_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
 /// Displays a success toast message.
 /// [message] is the text to be shown in the toast.
 /// The background color is green, and the position is at the bottom.
@@ -24,6 +23,7 @@ void showErrorToast(String message) {
     toastLength: Toast.LENGTH_SHORT,
     backgroundColor: AppColors.errorColor,
     gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 3,
   );
 }
 
@@ -419,4 +419,3 @@ Future<String?> getToken() async {
 //     return TextSelection.fromPosition(TextPosition(offset: text.length));
 //   }
 // }
-

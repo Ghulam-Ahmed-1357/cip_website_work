@@ -1146,36 +1146,7 @@ class _PlanningScreenState extends State<PlanningScreen> {
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      // Container(
-                                                      //   // child: ,
-                                                      //   width: 700,
-                                                      //   height: 50,
-                                                      //   decoration:
-                                                      //       BoxDecoration(
-                                                      //         border:
-                                                      //             Border.all(
-                                                      //               width: 1,
-                                                      //             ),
-                                                      //       ),
-                                                      //   child: Container(
-                                                      //     decoration: BoxDecoration(
-                                                      //       shape:
-                                                      //           BoxShape.circle,
-                                                      //       color: AppColors
-                                                      //           .secondaryColor,
-                                                      //     ),
-                                                      //     child: Padding(
-                                                      //       padding:
-                                                      //           const EdgeInsets.all(
-                                                      //             12.0,
-                                                      //           ),
-                                                      //       child: Icon(
-                                                      //         Icons.send,
-                                                      //       ),
-                                                      //     ),
-                                                      //   ),
-                                                      // ),
+                                                      ),                                        
                                                     ],
                                                   ),
                                                 ],

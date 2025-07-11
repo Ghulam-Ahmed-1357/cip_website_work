@@ -1,5 +1,6 @@
 // import 'package:cip_website/dashboard.dart';
 // import 'package:cip_website/views/add_planning_dashboard.dart';
+import 'package:cip_website/pages/authentication/login_screen.dart';
 import 'package:cip_website/pages/planning/planning_screen.dart';
 // import 'package:cip_website/views/dashboard.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: PlanningScreen(),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
